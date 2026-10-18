@@ -59,7 +59,7 @@ const initialState = {
   page: 0,
   totalPages: 0,
   totalElements: 0,
-  filters: { keyword: '', category: '', city: '' },
+  filters: { keyword: '', category: '', city: '', startDate: '', endDate: '' },
 };
 
 const eventsSlice = createSlice({

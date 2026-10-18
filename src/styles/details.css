@@ -1,0 +1,8 @@
+.details-page { max-width: 900px; margin: 0 auto; padding: 1rem; }
+.back-link { display: inline-block; margin-bottom: 1rem; }
+.details-card { border: 1px solid #444; border-radius: 12px; overflow: hidden; text-align: left; }
+.details-img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+.details-body { padding: 1.25rem; }
+.details-body h1 { margin: 0.5rem 0 1rem; }
+.details-body p { margin: 0.4rem 0; }
+.details-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 1.5rem; }

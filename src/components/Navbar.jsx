@@ -1,12 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
 
 export default function Navbar() {
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
   return (
-    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
+    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'center' }}>
       <Link to="/events">Events</Link>
-      <Link to="/my-events">My Events</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
+      {user ? (
+        <>
+          <Link to="/my-events">My Events</Link>
+          <span style={{ marginLeft: 'auto' }}>Hi, {user.name}</span>
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      ) : (
+        <>
+          <Link to="/login" style={{ marginLeft: 'auto' }}>Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      )}
     </nav>
   );
 }

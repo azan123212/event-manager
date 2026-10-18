@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventDetails, clearSelected } from '../features/events/eventsSlice';
+import { registerEvent } from '../features/registrations/registrationsSlice';
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import '../styles/details.css';
@@ -19,7 +20,11 @@ function formatDate(date) {
 export default function EventDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { selected, detailsStatus, detailsError } = useSelector((state) => state.events);
+  const user = useSelector((state) => state.auth.user);
+  const registrations = useSelector((state) => state.registrations.items);
 
   useEffect(() => {
     dispatch(getEventDetails(id));
@@ -29,6 +34,17 @@ export default function EventDetails() {
   }, [dispatch, id]);
 
   const event = selected && selected.id === id ? selected : null;
+
+  const isRegistered =
+    user && registrations.some((r) => r.userId === user.id && r.eventId === id);
+
+  const handleRegister = () => {
+    if (!user) {
+      navigate('/login', { state: { from: location.pathname } });
+      return;
+    }
+    dispatch(registerEvent({ userId: user.id, event }));
+  };
 
   return (
     <div className="details-page">
@@ -69,7 +85,9 @@ export default function EventDetails() {
             {event.pleaseNote && <p><em>{event.pleaseNote}</em></p>}
 
             <div className="details-actions">
-              {/* Register button is added in the next step */}
+              <button onClick={handleRegister} disabled={isRegistered}>
+                {isRegistered ? 'Registered ✓' : user ? 'Register for event' : 'Login to register'}
+              </button>
               {event.url && (
                 <a href={event.url} target="_blank" rel="noreferrer">
                   View on Ticketmaster

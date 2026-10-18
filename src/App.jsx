@@ -7,11 +7,13 @@ import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
 import MyEvents from './pages/MyEvents';
 import NotFound from './pages/NotFound';
+import Toast from './components/Toast';
 
 export default function App() {
   return (
     <>
       <Navbar />
+      <Toast />
       <Routes>
         <Route path="/" element={<Navigate to="/events" replace />} />
         <Route path="/login" element={<Login />} />

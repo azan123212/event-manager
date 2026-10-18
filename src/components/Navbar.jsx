@@ -13,17 +13,17 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'center' }}>
+    <nav className="navbar">
       <Link to="/events">Events</Link>
       {user ? (
         <>
           <Link to="/my-events">My Events</Link>
-          <span style={{ marginLeft: 'auto' }}>Hi, {user.name}</span>
+          <span className="spacer">Hi, {user.name}</span>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (
         <>
-          <Link to="/login" style={{ marginLeft: 'auto' }}>Login</Link>
+          <Link to="/login" className="spacer">Login</Link>
           <Link to="/register">Register</Link>
         </>
       )}

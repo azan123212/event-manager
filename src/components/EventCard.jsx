@@ -4,7 +4,7 @@ export default function EventCard({ event }) {
   return (
     <Link to={`/events/${event.id}`} className="event-card">
       {event.image ? (
-        <img src={event.image} alt={event.name} loading="lazy" />
+        <img src={event.image} alt={event.name} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
       ) : (
         <div className="event-card-noimg">No image</div>
       )}
